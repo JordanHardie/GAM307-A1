@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject collectCoinEffect;
+
     public float rotateSpeed;
     public float floatSpeed;
     public float movementDistance;
@@ -30,6 +33,14 @@ public class Coin : MonoBehaviour
         transform.Rotate(transform.up, 360 * rotateSpeed * Time.deltaTime);
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            Pickup();
+        }        
+    }
+
     void Float()
     {
         float newY = transform.position.y + (isMovingUp ? 1 : -1) * 2 * movementDistance * floatSpeed * Time.deltaTime;
@@ -46,5 +57,12 @@ public class Coin : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+    }
+
+    void Pickup()
+    {
+        GameManager.Instance.NumCoins++;
+        Instantiate(collectCoinEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

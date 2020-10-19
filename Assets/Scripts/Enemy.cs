@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour {
 			{
 				StopCoroutine(turnTowardsPlayerCoroutine);
 				StopCoroutine(moveTowardsPlayerCoroutine);
+				animatorComponent.SetTrigger("Idle");
 			}
 		}
 	}
@@ -82,7 +83,7 @@ public class Enemy : MonoBehaviour {
 
 	private IEnumerator MoveTowardsPlayer(Transform player)
 	{
-
+		animatorComponent.SetTrigger("Walk");
 		while (true)
 		{
 			Vector3 playerDirection = transform.position - player.position;
